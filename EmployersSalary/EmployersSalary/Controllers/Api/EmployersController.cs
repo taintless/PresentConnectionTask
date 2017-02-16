@@ -25,12 +25,12 @@ namespace EmployersSalary.Controllers.Api
         //}
 
         // GET /api/employers
-        public IHttpActionResult GetEmployers(string query = null)
+        public IHttpActionResult GetEmployers()
         {
             var employers = _context.Employers;
             //if (!String.IsNullOrWhiteSpace(query))
             //{
-            //    employers = _context.Employers.Where(e => e.FirstName.Contains(query));
+            //    employers = employers.Where(e => e.FirstName.Contains(query));
             //}
 
             return Ok(employers);
@@ -73,7 +73,10 @@ namespace EmployersSalary.Controllers.Api
             if (employerInDb == null)
                 return NotFound();
 
-            Mapper.Map(employer, employerInDb);
+            employerInDb.FirstName = employer.FirstName;
+            employerInDb.LastName = employer.LastName;
+            employerInDb.NetSalary = employer.NetSalary;
+            //Mapper.Map(employer, employerInDb);
 
             _context.SaveChanges();
 
