@@ -18,7 +18,7 @@ namespace EmployersSalary.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
         [Display(Name = "Net Salary")]
-        public float NetSalary { get; set; }
+        public float? NetSalary { get; set; }
 
         public string Title
         {
