@@ -201,7 +201,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702161358081_InitialSeed.cs" />
+    <Compile Include="Migrations\201702161358081_InitialSeed.Designer.cs">
+      <DependentUpon>201702161358081_InitialSeed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702161359007_CreatedEmployerModel.cs" />
+    <Compile Include="Migrations\201702161359007_CreatedEmployerModel.Designer.cs">
+      <DependentUpon>201702161359007_CreatedEmployerModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702161402013_ChangedEmployerPKLenght.cs" />
+    <Compile Include="Migrations\201702161402013_ChangedEmployerPKLenght.Designer.cs">
+      <DependentUpon>201702161402013_ChangedEmployerPKLenght.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Employer.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -277,6 +291,17 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201702161358081_InitialSeed.resx">
+      <DependentUpon>201702161358081_InitialSeed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702161359007_CreatedEmployerModel.resx">
+      <DependentUpon>201702161359007_CreatedEmployerModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702161402013_ChangedEmployerPKLenght.resx">
+      <DependentUpon>201702161402013_ChangedEmployerPKLenght.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
