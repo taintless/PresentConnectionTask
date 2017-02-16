@@ -36,10 +36,11 @@ namespace EmployersSalary.Controllers.Api
             return Ok(employers);
         }
 
-        // GET /api/employers/1
-        public IHttpActionResult GetEmployer(int id)
+        // GET /api/employers/firstName/lastName
+        [Route("api/employers/{firstName}/{lastName}")]
+        public IHttpActionResult GetEmployer(string firstName, string lastName)
         {
-            var employer = _context.Employers.SingleOrDefault(c => c.Id == id);
+            var employer = _context.Employers.SingleOrDefault(c => c.FirstName == firstName && c.LastName == lastName);
 
             if (employer == null)
                 return NotFound();
@@ -58,17 +59,18 @@ namespace EmployersSalary.Controllers.Api
             _context.SaveChanges();
 
 
-            return Created(new Uri(Request.RequestUri + "/" + employer.Id), employer);
+            return Created(new Uri(Request.RequestUri + "/" + employer.FirstName + "/" + employer.LastName), employer);
         }
 
         // PUT /api/employers/1
         [HttpPut]
-        public IHttpActionResult UpdateEmployer(int id, Employer employer)
+        [Route("api/employers/{firstName}/{lastName}")]
+        public IHttpActionResult UpdateEmployer(string firstName, string lastName, Employer employer)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var employerInDb = _context.Employers.SingleOrDefault(c => c.Id == id);
+            var employerInDb = _context.Employers.SingleOrDefault(c => c.FirstName == firstName && c.LastName == lastName);
 
             if (employerInDb == null)
                 return NotFound();
@@ -83,19 +85,19 @@ namespace EmployersSalary.Controllers.Api
             return Ok();
         }
 
-        // DELETE /api/employers/1
-        [HttpDelete]
-        public IHttpActionResult DeleteEmployer(int id)
-        {
-            var employerInDb = _context.Employers.SingleOrDefault(c => c.Id == id);
+        //// DELETE /api/employers/1
+        //[HttpDelete]
+        //public IHttpActionResult DeleteEmployer(int id)
+        //{
+        //    var employerInDb = _context.Employers.SingleOrDefault(c => c.Id == id);
 
-            if (employerInDb == null)
-                return NotFound();
+        //    if (employerInDb == null)
+        //        return NotFound();
 
-            _context.Employers.Remove(employerInDb);
-            _context.SaveChanges();
+        //    _context.Employers.Remove(employerInDb);
+        //    _context.SaveChanges();
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
     }
 }

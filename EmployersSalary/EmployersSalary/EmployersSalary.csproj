@@ -229,6 +229,10 @@
     <Compile Include="Migrations\201702160700225_ChangedEmployerModel.Designer.cs">
       <DependentUpon>201702160700225_ChangedEmployerModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702161117352_ChangedEmployersPrimaryKey.cs" />
+    <Compile Include="Migrations\201702161117352_ChangedEmployersPrimaryKey.Designer.cs">
+      <DependentUpon>201702161117352_ChangedEmployersPrimaryKey.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Employer.cs" />
@@ -491,6 +495,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702160700225_ChangedEmployerModel.resx">
       <DependentUpon>201702160700225_ChangedEmployerModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702161117352_ChangedEmployersPrimaryKey.resx">
+      <DependentUpon>201702161117352_ChangedEmployersPrimaryKey.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
