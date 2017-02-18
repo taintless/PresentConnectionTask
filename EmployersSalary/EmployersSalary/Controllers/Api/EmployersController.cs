@@ -5,7 +5,9 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Data.Entity;
+using System.Web.Security;
 using EmployersSalary.Models;
+using Microsoft.AspNet.Identity;
 
 namespace EmployersSalary.Controllers.Api
 {
@@ -35,6 +37,19 @@ namespace EmployersSalary.Controllers.Api
 
             if (employer == null)
                 return NotFound();
+
+            return Ok(employer);
+        }
+
+        // GET /api/employers
+        [Route("api/loggedEmployer")]
+        public IHttpActionResult GetLoggedEmployer()
+        {
+            var loggedUserId = User.Identity.GetUserId();
+            var user = _context.Users.Include(u => u.Employer).Single(u => u.Id == loggedUserId);
+            var employer =
+                _context.Employers.Single(
+                    e => e.FirstName == user.Employer.FirstName || e.LastName == user.Employer.LastName);
 
             return Ok(employer);
         }

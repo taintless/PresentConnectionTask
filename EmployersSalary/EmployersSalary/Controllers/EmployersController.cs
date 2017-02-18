@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
+using System.Web.Security;
 using EmployersSalary.Models;
+using Microsoft.AspNet.Identity;
 
 namespace EmployersSalary.Controllers
 {
+    [System.Web.Mvc.Authorize]
     public class EmployersController : Controller
     {
         private ApplicationDbContext _context;
@@ -23,10 +27,20 @@ namespace EmployersSalary.Controllers
         }
         public ViewResult Index()
         {
-            //if (User.IsInRole(RoleName.CanManageMovies))
-            return View("List");
+            
+            if (User.IsInRole(RoleName.Admin))
+                return View("List");
+            if (User.IsInRole(RoleName.ProjectManager))
+                return View("ListReadOnly");
 
-            //return View("ReadOnlyList");
+            var loggedUserId = User.Identity.GetUserId();
+            var user = _context.Users.Include(u => u.Employer).Single(u => u.Id == loggedUserId);
+            var employer =
+                _context.Employers.Single(
+                    e => e.FirstName == user.Employer.FirstName || e.LastName == user.Employer.LastName);
+
+
+            return View("ListEmployer", employer);
         }
 
         //public ActionResult New()
@@ -35,6 +49,7 @@ namespace EmployersSalary.Controllers
         //    return View("EmployerForm", employer);
         //}
 
+        [System.Web.Mvc.Authorize(Roles = RoleName.Admin)]
         [System.Web.Mvc.HttpPost]
         public ActionResult Save(Employer employer)
         {
@@ -59,7 +74,8 @@ namespace EmployersSalary.Controllers
             return RedirectToAction("Index", "Employers");
         }
 
-       // [Route("/employers/{firstName}/{lastName}")]
+        // [Route("/employers/{firstName}/{lastName}")]
+        [System.Web.Mvc.Authorize(Roles = RoleName.Admin)]
         public ActionResult Edit([FromUri] string firstName, string lastName)
         {
 
