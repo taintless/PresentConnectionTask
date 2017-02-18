@@ -6,6 +6,9 @@ namespace EmployersSalary.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
+        public Employer Employer { get; set; }
+        public string LastName { get; set; }
+        [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }

@@ -54,9 +54,9 @@ namespace EmployersSalary
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "1860152907594995",
+               appSecret: "ebba65ea44bb9392c1972f632ad33bcf");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
