@@ -155,8 +155,8 @@ namespace EmployersSalary.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid || !(_context.Employers.SingleOrDefault(
-                       c => c.FirstName == model.FirstName && c.LastName == model.LastName) == null))
+            if (ModelState.IsValid || _context.Employers.SingleOrDefault(
+                       c => c.FirstName == model.FirstName && c.LastName == model.LastName) == null)
             {
                     var user = new ApplicationUser
                 {
@@ -169,28 +169,17 @@ namespace EmployersSalary.Controllers
                         }
                     };
 
-                //add employer
-               
-                    //throw new Exception();
 
-                //var employer = new Employer
-                //{
-                //    FirstName = model.FirstName,
-                //    LastName = model.LastName
-                //};
-
-                //_context.Employers.Add(employer);
-                //_context.SaveChanges();
 
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
 
-                    ////Temp code
+                    //Temp code
                     //var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
                     //var roleManager = new RoleManager<IdentityRole>(roleStore);
-                    //await roleManager.CreateAsync(new IdentityRole("Admin"));
-                    //await UserManager.AddToRoleAsync(user.Id, "Admin");
+                    //await roleManager.CreateAsync(new IdentityRole("ProjectManager"));
+                    //await UserManager.AddToRoleAsync(user.Id, "ProjectManager");
 
 
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);

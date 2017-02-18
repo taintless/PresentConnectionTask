@@ -22,7 +22,7 @@ namespace EmployersSalary.Controllers.Api
         [Route("api/employers")]
         public IHttpActionResult GetEmployers()
         {
-            var employers = _context.Employers;
+            var employers = _context.Employers.Where(e => e.FirstName != "Admin");
 
             return Ok(employers);
         }
