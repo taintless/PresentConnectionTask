@@ -25,8 +25,8 @@ namespace EmployersSalary
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+            bundles.Add(new StyleBundle("~/Content/css/metroUI").Include(
+                      "~/Content/bootstrap-sandstone.css",
                       "~/content/datatables/css/datatables.bootstrap.css",
                       "~/Content/site.css"));
         }
