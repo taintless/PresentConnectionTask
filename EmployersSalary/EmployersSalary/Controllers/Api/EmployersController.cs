@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace EmployersSalary.Controllers.Api
 {
+    [Authorize]
     public class EmployersController : ApiController
     {
         private ApplicationDbContext _context;
@@ -22,6 +23,7 @@ namespace EmployersSalary.Controllers.Api
 
         // GET /api/employers
         [Route("api/employers")]
+        [Authorize(Roles = RoleName.Admin + "," + RoleName.ProjectManager)]
         public IHttpActionResult GetEmployers()
         {
             var employers = _context.Employers.Where(e => e.FirstName != "Admin");
@@ -29,7 +31,8 @@ namespace EmployersSalary.Controllers.Api
             return Ok(employers);
         }
 
-        // GET /api/employers/firstName/lastName
+        // GET /api/employers?firstname=firstName&lastname=lastName
+        [Authorize(Roles = RoleName.Admin + "," + RoleName.ProjectManager)]
         [Route("api/employer")]
         public IHttpActionResult GetEmployer([FromUri] string firstName, string lastName)
         {
@@ -41,21 +44,23 @@ namespace EmployersSalary.Controllers.Api
             return Ok(employer);
         }
 
-        // GET /api/employers
-        [Route("api/loggedEmployer")]
-        public IHttpActionResult GetLoggedEmployer()
-        {
-            var loggedUserId = User.Identity.GetUserId();
-            var user = _context.Users.Include(u => u.Employer).Single(u => u.Id == loggedUserId);
-            var employer =
-                _context.Employers.Single(
-                    e => e.FirstName == user.Employer.FirstName || e.LastName == user.Employer.LastName);
+        //// GET /api/loggedEmployer
+        //[Route("api/loggedEmployer")]
+        //public IHttpActionResult GetLoggedEmployer()
+        //{
+        //    var loggedUserId = User.Identity.GetUserId();
+        //    var user = _context.Users.Include(u => u.Employer).Single(u => u.Id == loggedUserId);
+        //    var employer =
+        //        _context.Employers.Single(
+        //            e => e.FirstName == user.Employer.FirstName || e.LastName == user.Employer.LastName);
 
-            return Ok(employer);
-        }
+        //    return Ok(employer);
+        //}
 
         // POST /api/employers
+        [Authorize(Roles = RoleName.Admin)]
         [HttpPost]
+        [Route("api/employers")]
         public IHttpActionResult CreateEmployer(Employer employer)
         {
             if (!ModelState.IsValid)
@@ -68,21 +73,17 @@ namespace EmployersSalary.Controllers.Api
             return Created(new Uri(Request.RequestUri + "/" + employer.FirstName + "/" + employer.LastName), employer);
         }
 
-        // PUT /api/employers/1
+        // PUT /api/employers?firstname=firstName&lastname=lastName
+        [Authorize(Roles = RoleName.Admin)]
         [HttpPut]
         [Route("api/employers")]
         public IHttpActionResult UpdateEmployer([FromUri] string firstName, string lastName, Employer employer)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
             var employerInDb = _context.Employers.SingleOrDefault(c => c.FirstName == firstName && c.LastName == lastName);
 
             if (employerInDb == null)
                 return NotFound();
 
-            employerInDb.FirstName = employer.FirstName;
-            employerInDb.LastName = employer.LastName;
             employerInDb.NetSalary = employer.NetSalary;
 
             _context.SaveChanges();
@@ -90,7 +91,8 @@ namespace EmployersSalary.Controllers.Api
             return Ok();
         }
 
-        // DELETE /api/employers/1
+        // DELETE /api/employers?firstname=firstName&lastname=lastName
+        [Authorize(Roles = RoleName.Admin)]
         [HttpDelete]
         [Route("api/employers")]
         public IHttpActionResult DeleteEmployer([FromUri] string firstName, string lastName)

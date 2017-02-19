@@ -43,11 +43,6 @@ namespace EmployersSalary.Controllers
             return View("ListEmployer", employer);
         }
 
-        //public ActionResult New()
-        //{
-        //    var employer = new Employer();
-        //    return View("EmployerForm", employer);
-        //}
 
         [System.Web.Mvc.Authorize(Roles = RoleName.Admin)]
         [System.Web.Mvc.HttpPost]
@@ -74,7 +69,6 @@ namespace EmployersSalary.Controllers
             return RedirectToAction("Index", "Employers");
         }
 
-        // [Route("/employers/{firstName}/{lastName}")]
         [System.Web.Mvc.Authorize(Roles = RoleName.Admin)]
         public ActionResult Edit([FromUri] string firstName, string lastName)
         {
