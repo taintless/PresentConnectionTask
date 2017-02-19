@@ -37,7 +37,7 @@ namespace EmployersSalary.Controllers
             var user = _context.Users.Include(u => u.Employer).Single(u => u.Id == loggedUserId);
             var employer =
                 _context.Employers.Single(
-                    e => e.FirstName == user.Employer.FirstName || e.LastName == user.Employer.LastName);
+                    e => e.FirstName == user.Employer.FirstName && e.LastName == user.Employer.LastName);
 
 
             return View("ListEmployer", employer);
