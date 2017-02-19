@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using EmployersSalary.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity;
 
 namespace EmployersSalary.Controllers
 {
@@ -169,18 +170,11 @@ namespace EmployersSalary.Controllers
                         }
                     };
 
-
-
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-
-                    //Temp code
-                    //var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
-                    //var roleManager = new RoleManager<IdentityRole>(roleStore);
-                    //await roleManager.CreateAsync(new IdentityRole("ProjectManager"));
-                    //await UserManager.AddToRoleAsync(user.Id, "ProjectManager");
-
+                    //save default profile image
+                    System.IO.File.Copy(Server.MapPath(MyConstants.defaultProfileImage), Server.MapPath(MyConstants.profileImagesPath + user.Employer.FirstName + user.Employer.LastName + ".png") );
 
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     

@@ -79,5 +79,21 @@ namespace EmployersSalary.Controllers
 
             return View("EmployerForm", employer);
         }
+
+        public ActionResult FileUpload(HttpPostedFileBase file)
+        {
+            if (file != null || file.ContentType.StartsWith("image/"))
+            {
+                var loggedUserId = User.Identity.GetUserId();
+                var loggedUser = _context.Users.Include(u => u.Employer).Single(u => u.Id == loggedUserId);
+                string pic = System.IO.Path.GetFileName(loggedUser.Employer.FirstName + loggedUser.Employer.LastName+ ".png");
+                string path = System.IO.Path.Combine(
+                                        Server.MapPath("~/images/profile"), pic);
+                file.SaveAs(path);
+                
+            }
+            // after successfully uploading redirect the user
+            return RedirectToAction("Index", "Employers");
+        }
     }
 }
