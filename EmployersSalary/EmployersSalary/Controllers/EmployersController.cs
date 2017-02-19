@@ -88,11 +88,10 @@ namespace EmployersSalary.Controllers
                 var loggedUser = _context.Users.Include(u => u.Employer).Single(u => u.Id == loggedUserId);
                 string pic = System.IO.Path.GetFileName(loggedUser.Employer.FirstName + loggedUser.Employer.LastName+ ".png");
                 string path = System.IO.Path.Combine(
-                                        Server.MapPath("~/images/profile"), pic);
+                                        Server.MapPath(MyConstants.profileImagesPath), pic);
                 file.SaveAs(path);
                 
             }
-            // after successfully uploading redirect the user
             return RedirectToAction("Index", "Employers");
         }
     }

@@ -4,17 +4,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="myContent">
-    <h2>Employer Info:</h2>
+    <h2>Your Info:</h2>
     </br>
 
     <h4>@Model.FirstName @Model.LastName</h4>
     @if (Model.NetSalary == null)
     {
-        <h4>Your salary has not been set</h4>
+        <h4>Your salary has not been set.</h4>
     }
     else
-    {<h4> @Model.NetSalary€</h4>}
+    {<h4> Salary: @Model.NetSalary€</h4>}
     </br>
     <td>
         <img src="~/images/profile/@{@Model.FirstName@Model.LastName}.png" alt="Employer foto" width="200" />
@@ -25,4 +24,3 @@
             <input type="submit" value="Upload" class="submit" />
         }
     </td>
-</div>

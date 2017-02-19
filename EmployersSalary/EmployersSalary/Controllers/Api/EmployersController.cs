@@ -44,34 +44,21 @@ namespace EmployersSalary.Controllers.Api
             return Ok(employer);
         }
 
-        //// GET /api/loggedEmployer
-        //[Route("api/loggedEmployer")]
-        //public IHttpActionResult GetLoggedEmployer()
-        //{
-        //    var loggedUserId = User.Identity.GetUserId();
-        //    var user = _context.Users.Include(u => u.Employer).Single(u => u.Id == loggedUserId);
-        //    var employer =
-        //        _context.Employers.Single(
-        //            e => e.FirstName == user.Employer.FirstName || e.LastName == user.Employer.LastName);
-
-        //    return Ok(employer);
-        //}
-
         // POST /api/employers
-        [Authorize(Roles = RoleName.Admin)]
-        [HttpPost]
-        [Route("api/employers")]
-        public IHttpActionResult CreateEmployer(Employer employer)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest();
+        //[Authorize(Roles = RoleName.Admin)]
+        //[HttpPost]
+        //[Route("api/employers")]
+        //public IHttpActionResult CreateEmployer(Employer employer)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return BadRequest();
 
-            _context.Employers.Add(employer);
-            _context.SaveChanges();
+        //    _context.Employers.Add(employer);
+        //    _context.SaveChanges();
 
 
-            return Created(new Uri(Request.RequestUri + "/" + employer.FirstName + "/" + employer.LastName), employer);
-        }
+        //    return Created(new Uri(Request.RequestUri + "/" + employer.FirstName + "/" + employer.LastName), employer);
+        //}
 
         // PUT /api/employers?firstname=firstName&lastname=lastName
         [Authorize(Roles = RoleName.Admin)]
