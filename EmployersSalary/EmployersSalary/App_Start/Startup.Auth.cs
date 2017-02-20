@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using EmployersSalary.Models;
+using System.Configuration;
 
 namespace EmployersSalary
 {
@@ -55,8 +56,8 @@ namespace EmployersSalary
             //   consumerSecret: "");
 
             app.UseFacebookAuthentication(
-               appId: "1860152907594995",
-               appSecret: "ebba65ea44bb9392c1972f632ad33bcf");
+               appId: ConfigurationManager.AppSettings["FacebookAppId"],
+               appSecret: ConfigurationManager.AppSettings["FacebookAppSecret"]);
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
