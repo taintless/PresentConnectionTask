@@ -26,9 +26,9 @@ namespace EmployersSalary
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/bootstrap-sandstone.css",
-                      "~/datatables/css/datatables.bootstrap.css",
-                      "~/site.css"));
+                      "~/Content/bootstrap-sandstone.css",
+                      "~/content/datatables/css/datatables.bootstrap.css",
+                      "~/Content/site.css"));
         }
     }
 }
