@@ -24,7 +24,7 @@ namespace EmployersSalary
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
-            
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap-sandstone.css",
                       "~/content/datatables/css/datatables.bootstrap.css",

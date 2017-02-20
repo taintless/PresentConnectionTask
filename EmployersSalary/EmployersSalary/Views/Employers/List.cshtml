@@ -5,15 +5,14 @@
 }
 
 <h2>Employers</h2>
-<p>
-    @Html.ActionLink("New Employer", "New", "Employers", null, new { @class = "btn btn-primary" })
-</p>
+
 <table id="employers" class="table table-bordered table-hover">
     <thead>
         <tr>
             <th>First Name</th>
             <th>Last Name</th>
-            <th>Gross Salary, $</th>
+            <th>Gross Salary, €</th>
+            <th>Net Salary, €</th>
             <th>Delete</th>
         </tr>
     </thead>
@@ -34,26 +33,32 @@
                         data: "firstName"
                         ,
                         render: function(data, type, employer) {
-                            return "<a href='/employers/edit/" + employer.id + "'>" + employer.firstName + "</a>";
+                            return "<a href='/employers/edit/?firstname=" + employer.firstName + "&lastname=" + employer.lastName + "'>" + employer.firstName + "</a>";
                         }
                     }
                     ,
                     {
                         data: "lastName",
-                        render: function (data, type, movie) {
-                            return "<a href='/employers/edit/" + movie.id + "'>" + movie.lastName + "</a>";
+                        render: function (data, type, employer) {
+                            return "<a href='/employers/edit/?firstname=" + employer.firstName + "&lastname=" + employer.lastName + "'>" + employer.lastName + "</a>";
                         }
                     },
                     {
                         data: "netSalary",
                         render: function(data) {
-                            return data * 1.32;
+                            return Math.round(data * 132) / 100;
+                        }
+                    },
+                    {
+                        data: "netSalary",
+                        render: function(data) {
+                            return data * 1;
                         }
                     },
                     {
                         data: "id",
-                        render: function(data) {
-                            return "<button class='btn-link js-delete' data-movie-id=" + data + ">Delete</button>";
+                        render: function (data, type, employer) {
+                            return "<button class='btn-link js-delete' data-movie-name=?firstname=" + employer.firstName + "&lastname=" + employer.lastName + ">Delete</button>";
                         }
                     }
                 ]
@@ -66,7 +71,7 @@
                 bootbox.confirm("Are you sure you want to delete this employer?", function (result) {
                     if (result) {
                         $.ajax({
-                            url: "/api/employers/" + button.attr("data-movie-id"),
+                            url: "/api/employers" + button.attr("data-movie-name"),
                             method: "DELETE",
                             success: function () {
                                 table.row(button.parents("tr")).remove().draw();

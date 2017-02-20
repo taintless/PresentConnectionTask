@@ -9,18 +9,25 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using EmployersSalary.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity;
 
 namespace EmployersSalary.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        private ApplicationDbContext _context;
 
         public AccountController()
         {
+            _context = new ApplicationDbContext();
         }
+
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+
+
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
@@ -149,12 +156,26 @@ namespace EmployersSalary.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid || _context.Employers.SingleOrDefault(
+                       c => c.FirstName == model.FirstName && c.LastName == model.LastName) == null)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                    var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                        Employer = new Employer
+                        {
+                            FirstName = model.FirstName,
+                            LastName = model.LastName
+                        }
+                    };
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    //save default profile image
+                    System.IO.File.Copy(Server.MapPath(MyConstants.defaultProfileImage), Server.MapPath(MyConstants.profileImagesPath + user.Employer.FirstName + user.Employer.LastName + ".png") );
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
@@ -367,7 +388,12 @@ namespace EmployersSalary.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    Employer = model.Employer
+                };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

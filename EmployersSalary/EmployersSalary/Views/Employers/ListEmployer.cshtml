@@ -1,0 +1,26 @@
+﻿@model EmployersSalary.Models.Employer
+@{
+    ViewBag.Title = "ListEmployer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <h2>Your Info:</h2>
+
+
+    <h4>@Model.FirstName @Model.LastName</h4>
+    @if (Model.NetSalary == null)
+    {
+        <h4>Your salary has not been set.</h4>
+    }
+    else
+    {<h4> Net Salary: @Model.NetSalary€</h4>}
+
+    <td>
+        <img src="~/images/profile/@{@Model.FirstName@Model.LastName}.png?@DateTime.Now.Ticks" alt="Employer foto" width="200" />
+        @using (Html.BeginForm("FileUpload", "Employers", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <label for="file">Change Image:</label>
+            <input type="file" name="file" id="file" style="width: 100%;" />
+            <input type="submit" value="Upload" class="submit" />
+        }
+    </td>
